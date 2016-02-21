@@ -1,4 +1,4 @@
 # wordpress-config
-Baseline configuration for WordPress instance.
+Baseline configuration for WordPress install.
 
 Coming soon.
