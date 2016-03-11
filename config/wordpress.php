@@ -4,8 +4,6 @@
 /**
   * Custom WordPress configuration
   *
-  * "wp-config.php" file.
-  *
   */
 
 
@@ -27,6 +25,19 @@ $ftp_ssl = '';
 $wp_siteurl = '';
 $wp_home = '';
 
+$wp_content_dir = '/var/www/wordpress/content';
+$wp_content_url = 'http://wordpress.dev/content';
+
+$wp_plugin_dir = '/var/www/wordpress/plugins-dev';
+$wp_plugin_url = 'http://wordpress.dev/plugins-dev';
+
+$wp_uploads = 'content/uploads-dev';
+
+$wp_memory_limit = '64';
+
+$user_table_name = '';
+$user_meta_table = '';
+
 /* ============================================================================================== */
 
 
@@ -42,30 +53,46 @@ define('DB_CHARSET', 'utf8');
 
 
 /* ============================================================================================== */
-// AUTHENTICATION (copy/paste from https://api.wordpress.org/secret-key/1.1/salt/)
+// Keys and salt to improve encryption of user information
 /* ============================================================================================== */
-define('AUTH_KEY', '');
-define('SECURE_AUTH_KEY', '');
-define('LOGGED_IN_KEY', '');
-define('NONCE_KEY', '');
-define('AUTH_SALT', '');
-define('SECURE_AUTH_SALT', '');
-define('LOGGED_IN_SALT', '');
-define('NONCE_SALT', '');
+define('AUTH_KEY', '123456789ABCDEFGHIJ');
+define('SECURE_AUTH_KEY', '123456789ABCDEFGHIJ');
+define('LOGGED_IN_KEY', '123456789ABCDEFGHIJ');
+define('NONCE_KEY', '123456789ABCDEFGHIJ');
+define('AUTH_SALT', '123456789ABCDEFGHIJ');
+define('SECURE_AUTH_SALT', '123456789ABCDEFGHIJ');
+define('LOGGED_IN_SALT', '123456789ABCDEFGHIJ');
+define('NONCE_SALT', '123456789ABCDEFGHIJ');
 /* ============================================================================================== */
 
 
 /* ============================================================================================== */
-// REQUIRE SSL
+// Force all logins and admin sessions to use SSL
 /* ============================================================================================== */
 define('FORCE_SSL_ADMIN', true);
 /* ============================================================================================== */
 
 
 /* ============================================================================================== */
-// REMOVE WORDPRESS VERSION FROM HEAD
+// Custom wp-content folder
 /* ============================================================================================== */
-add_filter('the_generator', '__return_null');
+define('WP_CONTENT_DIR', $wp_content_dir);
+define('WP_CONTENT_URL', $wp_content_url);
+/* ============================================================================================== */
+
+
+/* ============================================================================================== */
+// Custom plugins folder
+/* ============================================================================================== */
+define('WP_PLUGIN_DIR', $wp_plugin_dir);
+define('WP_PLUGIN_URL', $wp_plugin_url);
+/* ============================================================================================== */
+
+
+/* ============================================================================================== */
+// Custom uploads folder
+/* ============================================================================================== */
+define('UPLOADS', $wp_uploads);
 /* ============================================================================================== */
 
 
@@ -116,7 +143,7 @@ define('EMPTY_TRASH_DAYS', 15);
 /* ============================================================================================== */
 // MEMORY LIMIT
 /* ============================================================================================== */
-define('WP_MEMORY_LIMIT', '64');
+define('WP_MEMORY_LIMIT', $wp_memory_limit);
 /* ============================================================================================== */
 
 
@@ -131,16 +158,16 @@ define('FTP_SSL', $ftp_ssl);
 
 
 /* ============================================================================================== */
-// Updates
+// Completely disable all types of automatic updates
 /* ============================================================================================== */
-define('AUTOMATIC_UPDATER_DISABLED', true); // completely disable all types of automatic updates
+define('AUTOMATIC_UPDATER_DISABLED', true);
 /* ============================================================================================== */
 
 
 /* ============================================================================================== */
-// FILE EDITING
+// Disable plugin and theme installation, update, and editor
 /* ============================================================================================== */
-define('DISALLOW_FILE_EDIT', true);
+define('DISALLOW_FILE_MODS', true);
 /* ============================================================================================== */
 
 
@@ -152,14 +179,23 @@ define('WP_ALLOW_MULTISITE', false);
 
 
 /* ============================================================================================== */
-// DEBUG
+// Disable debugging
 /* ============================================================================================== */
 define('WP_DEBUG', false);
 /* ============================================================================================== */
 
 
-/* Absolute path to the WordPress directory. */
-if(!defined('ABSPATH')) {define('ABSPATH', dirname(__FILE__) . '/');}
+/* ============================================================================================== */
+// Custom users and usermeta tables
+/* ============================================================================================== */
+define('CUSTOM_USER_TABLE', $user_table_name);
+define('CUSTOM_USER_META_TABLE', $user_meta_table);
+/* ============================================================================================== */
 
-/* Sets up WordPress vars and included files. */
-require_once(ABSPATH . 'wp-settings.php');
+
+/* ============================================================================================== */
+// Disable public display of error messages
+/* ============================================================================================== */
+error_reporting(0);
+@ini_set('display_errors', 0);
+/* ============================================================================================== */
