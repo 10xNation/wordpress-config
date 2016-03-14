@@ -1,0 +1,7 @@
+path: /var/www/wordpress/public
+user: wp_user
+color: false
+
+core config:
+    dbuser: wp_db_user
+    dbpass: wp_db_password
